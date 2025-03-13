@@ -15,14 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem("userId", userId);
     }
 
-
-// Función para formatear la respuesta de GPT
-function formatResponse(response) {
-    const sentences = response.split(/(?<=[.!?])\s+/); // Divide en oraciones
-    return sentences.join('\n\n'); // Une con doble salto de línea
-}
-
-
+    // Función para formatear la respuesta de GPT
+    function formatResponse(response) {
+        const sentences = response.split(/(?<=[.!?])\s+/); // Divide en oraciones
+        return sentences.join('\n\n'); // Une con doble salto de línea
+    }
 
     // Toggle chat abierto/cerrado
     chatHeader.addEventListener('click', function() {
@@ -56,7 +53,7 @@ function formatResponse(response) {
     }
 
     // Obtener respuesta del servidor (backend) en vez de OpenAI directamente
-    async function getBotResponse() {
+    async function getBotResponse(message) {
         addMessage("Escribiendo...", "bot");  // Simula que está escribiendo
         
         try {
@@ -66,9 +63,26 @@ function formatResponse(response) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    message: chatHistory[chatHistory.length - 1].content  // Enviar solo el último mensaje
+                    userId, // Enviar el ID único del usuario
+                    message // Solo se envía el último mensaje
                 })
             });
+
+            const data = await response.json();
+            const botReply = data.reply || "No entendí bien tu pregunta. ¿Puedes reformularla?";
+
+            hideTypingIndicator();  // Ocultar indicador de "Escribiendo..."
+
+            // Formatear la respuesta del bot antes de mostrarla
+            const formattedReply = formatResponse(botReply);
+            addMessage(formattedReply, "bot");  // Agregar la respuesta formateada
+
+        } catch (error) {
+            console.error("Error al obtener respuesta:", error);
+            hideTypingIndicator();  // Ocultar indicador de "Escribiendo..."
+            addMessage("Hubo un problema al obtener la respuesta. Intenta de nuevo.", "bot");
+        }
+    }
 
     // Ocultar el indicador de "Escribiendo..."
     function hideTypingIndicator() {
@@ -77,44 +91,6 @@ function formatResponse(response) {
             typingIndicator.remove();
         }
     }
-
-
-
-
-
-
-    // Obtener respuesta del servidor con historial de usuario
-async function getBotResponse(message) {
-    showTypingIndicator();  // Mostrar indicador de "Escribiendo..."
-
-    try {
-        const response = await fetch("https://flores-nlks.onrender.com/getBotResponse", {
-       // const response = await fetch("http://localhost:3000/getBotResponse", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                userId, // Enviar el ID único del usuario
-                message // Solo se envía el último mensaje
-            })
-        });
-
-        const data = await response.json();
-        const botReply = data.reply || "No entendí bien tu pregunta. ¿Puedes reformularla?";
-
-        hideTypingIndicator();  // Ocultar indicador de "Escribiendo..."
-
-        // Formatear la respuesta del bot antes de mostrarla
-        const formattedReply = formatResponse(botReply);
-        addMessage(formattedReply, "bot");  // Agregar la respuesta formateada
-
-    } catch (error) {
-        console.error("Error al obtener respuesta:", error);
-        hideTypingIndicator();  // Ocultar indicador de "Escribiendo..."
-        addMessage("Hubo un problema al obtener la respuesta. Intenta de nuevo.", "bot");
-    }
-}
 
     // Abrir el chat automáticamente después de un tiempo
     setTimeout(() => {
