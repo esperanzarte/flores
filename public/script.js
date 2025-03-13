@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         addMessage("Escribiendo...", "bot");  // Simula que está escribiendo
         
         try {
-            const response = await fetch("http://localhost:3000/getBotResponse", {
+            const response = await fetch("https://flores-nlks.onrender.com/getBotResponse", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
