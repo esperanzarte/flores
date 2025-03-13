@@ -16,10 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Función para formatear la respuesta de GPT
-    function formatResponse(response) {
-        const sentences = response.split(/(?<=[.!?])\s+/); // Divide en oraciones
-        return sentences.join('\n\n'); // Une con doble salto de línea
-    }
+  function formatResponse(response) {
+    // Reemplaza cada punto, signo de exclamación o interrogación seguido de espacios
+    // por el mismo signo seguido de doble salto de línea.
+    return response.replace(/([.!?])\s+/g, '$1\n\n');
+}
 
     // Función para alternar el chat
     function toggleChat() {
