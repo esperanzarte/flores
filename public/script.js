@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Abrir el chat automáticamente después de 3 segundos
     setTimeout(() => {
         chatContainer.classList.add('open');
-    }, 3000);
+    }, 9000);
 
     // ========== SLIDER DE IMÁGENES ==========
     function initImageSlider() {
