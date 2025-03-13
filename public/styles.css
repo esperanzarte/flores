@@ -683,8 +683,8 @@ section {
 }
 
 .chat-avatar {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     background: rgb(51, 255, 0);
     color: rgb(1, 80, 1);
     border-radius: 50%;
@@ -881,7 +881,7 @@ section {
 /* Ajustes para el título del chat en móviles */
 @media (max-width: 480px) {
     .chat-header h3 {
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
     
     .chat-avatar {
@@ -922,7 +922,7 @@ section {
 /* Para pantallas muy pequeñas, reducir aún más */
 @media (max-width: 360px) {
     .chat-header h3 {
-        font-size: 0.5rem;
+        font-size: 0.8rem;
     }
     
     .discount-content h3 {
