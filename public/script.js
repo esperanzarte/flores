@@ -21,40 +21,62 @@ document.addEventListener('DOMContentLoaded', function() {
         return sentences.join('\n\n'); // Une con doble salto de línea
     }
 
-    // Toggle chat abierto/cerrado
-    chatHeader.addEventListener('click', function() {
+    // Función para alternar el chat
+    function toggleChat() {
         chatContainer.classList.toggle('open');
         const chevronIcon = chatToggle.querySelector('i');
         chevronIcon.style.transform = chatContainer.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+    }
+    
+    // Agregar eventos de click y touch al encabezado del chat
+    chatHeader.addEventListener('click', toggleChat);
+    chatHeader.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        toggleChat();
     });
 
     // Manejo del formulario de chat
     chatForm.addEventListener('submit', function(e) {
         e.preventDefault();
-
         const message = chatInput.value.trim();
         if (message === '') return;
-
         addMessage(message, 'user');
         chatInput.value = '';
-
-        // Llamar a la API para obtener la respuesta
         getBotResponse(message);
     });
 
-    // Agregar mensajes al chat
+    // Función para agregar mensajes al chat
     function addMessage(text, sender) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
         messageElement.textContent = text;
-
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // Obtener respuesta del servidor (backend) en vez de OpenAI directamente
+    // Mostrar indicador de "Escribiendo..."
+    function showTypingIndicator() {
+        let typingIndicator = document.querySelector('.typing-indicator');
+        if (!typingIndicator) {
+            typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('message', 'bot-message', 'typing-indicator');
+            typingIndicator.textContent = "Escribiendo...";
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    }
+
+    // Ocultar el indicador de "Escribiendo..."
+    function hideTypingIndicator() {
+        const typingIndicator = document.querySelector('.typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    // Obtener respuesta del servidor (backend)
     async function getBotResponse(message) {
-        addMessage("Escribiendo...", "bot");  // Simula que está escribiendo
+        showTypingIndicator();  // Mostrar indicador de "Escribiendo..."
         
         try {
             const response = await fetch("https://flores-nlks.onrender.com/getBotResponse", {
@@ -64,19 +86,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify({
                     userId, // Enviar el ID único del usuario
-                    message // Solo se envía el último mensaje
+                    message // Enviar el último mensaje
                 })
             });
 
             const data = await response.json();
             const botReply = data.reply || "No entendí bien tu pregunta. ¿Puedes reformularla?";
-
+            
             hideTypingIndicator();  // Ocultar indicador de "Escribiendo..."
-
-            // Formatear la respuesta del bot antes de mostrarla
             const formattedReply = formatResponse(botReply);
-            addMessage(formattedReply, "bot");  // Agregar la respuesta formateada
-
+            addMessage(formattedReply, "bot");
         } catch (error) {
             console.error("Error al obtener respuesta:", error);
             hideTypingIndicator();  // Ocultar indicador de "Escribiendo..."
@@ -84,15 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Ocultar el indicador de "Escribiendo..."
-    function hideTypingIndicator() {
-        const typingIndicator = chatMessages.querySelector('.typing-indicator');
-        if (typingIndicator) {
-            typingIndicator.remove();
-        }
-    }
-
-    // Abrir el chat automáticamente después de un tiempo
+    // Abrir el chat automáticamente después de 3 segundos
     setTimeout(() => {
         chatContainer.classList.add('open');
     }, 3000);
@@ -113,21 +124,17 @@ document.addEventListener('DOMContentLoaded', function() {
         function showSlide(index) {
             slides.forEach(slide => slide.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
-            
             slides[index].classList.add('active');
             dots[index].classList.add('active');
-            
             currentIndex = index;
         }
 
         function nextSlide() {
-            let newIndex = (currentIndex + 1) % slides.length;
-            showSlide(newIndex);
+            showSlide((currentIndex + 1) % slides.length);
         }
 
         function prevSlide() {
-            let newIndex = (currentIndex - 1 + slides.length) % slides.length;
-            showSlide(newIndex);
+            showSlide((currentIndex - 1 + slides.length) % slides.length);
         }
 
         function startAutoplay() {
@@ -139,11 +146,19 @@ document.addEventListener('DOMContentLoaded', function() {
             clearInterval(slideInterval);
         }
 
-        if (prevBtn) prevBtn.addEventListener('click', e => { e.preventDefault(); prevSlide(); stopAutoplay(); startAutoplay(); });
-        if (nextBtn) nextBtn.addEventListener('click', e => { e.preventDefault(); nextSlide(); stopAutoplay(); startAutoplay(); });
+        // Eventos para click y touch en botones
+        if (prevBtn) {
+            prevBtn.addEventListener('click', e => { e.preventDefault(); prevSlide(); stopAutoplay(); startAutoplay(); });
+            prevBtn.addEventListener('touchend', e => { e.preventDefault(); prevSlide(); stopAutoplay(); startAutoplay(); });
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', e => { e.preventDefault(); nextSlide(); stopAutoplay(); startAutoplay(); });
+            nextBtn.addEventListener('touchend', e => { e.preventDefault(); nextSlide(); stopAutoplay(); startAutoplay(); });
+        }
 
         dots.forEach((dot, index) => {
             dot.addEventListener('click', e => { e.preventDefault(); showSlide(index); stopAutoplay(); startAutoplay(); });
+            dot.addEventListener('touchend', e => { e.preventDefault(); showSlide(index); stopAutoplay(); startAutoplay(); });
         });
 
         slider.addEventListener('mouseenter', stopAutoplay);
