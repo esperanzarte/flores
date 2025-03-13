@@ -35,6 +35,18 @@ Si te preguntan el valor en la moneda de su pais, dale un precio estimado, pero 
 
 haz hincapie en que aprovechen la promocion, que quedan solo 3 horas.
 
+🟢Cuales son los medios de pago ? o por donde puedo pagar? o como puedo pagar?
+
+puedes pagar con debito/credito. Paypal. Billeteras virtuales. Y en algunos países puedes abonar en efectivo. 
+
+Donde pagar en efectivo por pais:
+ 
+Mexico:Oxxo.
+Colombia:Efecty.
+Perú: PagoEfectivo.
+Chile: senciliito.
+
+
 
 🟢Donde me inscribo ? o como me inscribo? como es el proceso de inscripcion? o como adquiero el curo? 
 Es muy facil, simplemente presiona algun boton rojo de la pagina. Diligencia el formulario y escoge tu metodo de pago preferido. 
