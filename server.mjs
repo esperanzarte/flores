@@ -15,34 +15,35 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Habilitar CORS (necesario si el frontend está en un dominio diferente)
+// Habilitar CORS y parseo de JSON
 app.use(cors());
 app.use(express.json());
 
 // Servir archivos estáticos desde 'public'
 app.use(express.static('public'));
 
-// Almacenar el historial de conversaciones por usuario
-const userChatHistory = {};
+// --- Caching del system_prompt ---
+// Leer el archivo system_prompt.js una sola vez al iniciar el servidor.
+const systemPromptPath = path.join(__dirname, 'public', 'system_prompt.js');
+let systemPrompt = '';
+try {
+    systemPrompt = fs.readFileSync(systemPromptPath, 'utf8');
+    console.log('System prompt cargado correctamente.');
+} catch (error) {
+    console.error("Error al leer system_prompt.js:", error);
+}
 
-// Máximo número de mensajes en el historial
+const userChatHistory = {};
 const MAX_HISTORY_LENGTH = 10;
 
-// Ruta para obtener la respuesta del bot con historial
 app.post('/getBotResponse', async (req, res) => {
     const { message, userId } = req.body;
-
     if (!userId) {
         return res.status(400).json({ error: "Se requiere un userId." });
     }
 
-    // Leer el archivo system_prompt.js para obtener el prompt inicial del sistema
-    const systemPromptPath = path.join(__dirname, 'public', 'system_prompt.js');
-    let systemPrompt = '';
-    try {
-        systemPrompt = fs.readFileSync(systemPromptPath, 'utf8');
-    } catch (error) {
-        console.error("Error al leer system_prompt.js:", error);
+    // Validar que se haya cargado el systemPrompt
+    if (!systemPrompt) {
         return res.status(500).json({ error: "No se pudo cargar el prompt del sistema." });
     }
 
@@ -75,25 +76,30 @@ app.post('/getBotResponse', async (req, res) => {
                 "Authorization": `Bearer ${API_KEY}`
             },
             body: JSON.stringify({
-                model: "gpt-4o-mini", // Usar un modelo válido
-                messages: userChatHistory[userId] // Enviar historial completo
+                model: "gpt-4o-mini", // Asegúrate de usar un modelo válido
+                messages: userChatHistory[userId]
             })
         });
+
+        // Verificar si la respuesta fue exitosa
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Error de OpenAI API:", errorText);
+            return res.status(response.status).json({ error: "Error en la API de OpenAI." });
+        }
 
         const data = await response.json();
         if (data.choices && data.choices[0] && data.choices[0].message) {
             const botReply = data.choices[0].message.content;
-
             // Agregar respuesta del bot al historial
             userChatHistory[userId].push({ role: "assistant", content: botReply });
-
-            res.json({ reply: botReply });
+            return res.json({ reply: botReply });
         } else {
-            res.status(500).json({ error: "No se pudo obtener una respuesta válida." });
+            return res.status(500).json({ error: "No se pudo obtener una respuesta válida." });
         }
     } catch (error) {
         console.error("Error al obtener respuesta de OpenAI:", error);
-        res.status(500).json({ error: "Hubo un problema al obtener la respuesta." });
+        return res.status(500).json({ error: "Hubo un problema al obtener la respuesta." });
     }
 });
 
