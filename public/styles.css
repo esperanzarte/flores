@@ -685,8 +685,8 @@ section {
 .chat-avatar {
     width: 20px;
     height: 20px;
-    background: white;
-    color: var(--primary-color);
+    background: rgb(51, 255, 0);
+    color: rgb(1, 80, 1);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -738,6 +738,7 @@ section {
     align-self: flex-start;
     border-bottom-left-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    white-space: pre-line; /* Respeta los saltos de línea */
 }
 
 .chat-input-form {
@@ -872,4 +873,63 @@ section {
 
 .pulse {
     animation: pulse 2s infinite;
+}
+
+
+/* Añade estos estilos al final de tu archivo CSS */
+
+/* Ajustes para el título del chat en móviles */
+@media (max-width: 480px) {
+    .chat-header h3 {
+        font-size: 0.8rem;
+    }
+    
+    .chat-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+    
+    .chat-header {
+        padding: 10px 15px;
+    }
+    
+    .chat-toggle i {
+        font-size: 0.9rem;
+    }
+}
+
+/* Ajustes para el banner de descuento en móviles */
+@media (max-width: 480px) {
+    .discount-banner {
+        padding: 10px 0;
+    }
+    
+    .discount-content h3 {
+        font-size: 1rem;
+    }
+    
+    .discount-badge {
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+    
+    .discount-content {
+        gap: 10px;
+    }
+}
+
+/* Para pantallas muy pequeñas, reducir aún más */
+@media (max-width: 360px) {
+    .chat-header h3 {
+        font-size: 0.5rem;
+    }
+    
+    .discount-content h3 {
+        font-size: 0.6rem;
+    }
+    
+    .discount-badge {
+        font-size: 0.8rem;
+    }
 }

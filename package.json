@@ -2,9 +2,9 @@
   "name": "florbot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.mjs",  
   "scripts": {
-    "start": "node server.mjs", 
+    "start": "node server.mjs",  
     "build": "echo 'No build step needed'",  
     "test": "echo \"Error: no test specified\" && exit 1"
   },
