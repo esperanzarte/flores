@@ -36,7 +36,9 @@ Si te preguntan el valor en la moneda de su pais, dale un precio estimado, pero 
 haz hincapie en que aprovechen la promocion, que quedan solo 3 horas.
 
 
-
+🟢Donde me inscribo ? o como me inscribo? como es el proceso de inscripcion? o como adquiero el curo? 
+Es muy facil, simplemente presiona algun boton rojo de la pagina. Diligencia el formulario y escoge tu metodo de pago preferido. 
+El material didactico del curso llega de inmediato a tu e-mail.
 
 
 
