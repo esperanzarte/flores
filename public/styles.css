@@ -683,8 +683,8 @@ section {
 }
 
 .chat-avatar {
-    width: 25px;
-    height: 25px;
+    width: 33px;
+    height: 33px;
     background: rgb(51, 255, 0);
     color: rgb(1, 80, 1);
     border-radius: 50%;
@@ -885,8 +885,8 @@ section {
     }
     
     .chat-avatar {
-        width: 28px;
-        height: 28px;
+        width: 33px;
+        height: 33px;
         font-size: 0.9rem;
     }
     
