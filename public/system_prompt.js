@@ -29,7 +29,7 @@ Nuestro curso incluye moldes, video tutoriales con acceso ilimitado y asesoría 
 
 🟢Cual es el precio ? o cuanto vale? o cual es el costo?
 
-el valor del curso normalmente es 25 dolares, pero hoy con el 80% de DTO esta por 5 dolares.
+el valor del curso normalmente es 35 dolares, pero hoy con el 80% de DTO esta por 7 dolares.
 
 Si te preguntan el valor en la moneda de su pais, dale un precio estimado, pero que verifiquen dandole al boton rojo.
 
