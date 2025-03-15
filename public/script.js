@@ -122,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         chatContainer.classList.add('open');
     }, 9000);
-});
 
     // ========== SLIDER DE IMÁGENES ==========
     function initImageSlider() {
