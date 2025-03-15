@@ -14,9 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem("userId", userId);
     }
 
-    function formatResponse(response) {
-        return response.replace(/([.!?])\s+/g, '$1\n\n');
-    }
+ function formatResponse(response) {
+    return response.replace(new RegExp("([.!?])", "g"), '$1\n\n');
+}
+
 
     function toggleChat() {
         chatContainer.classList.toggle('open');
