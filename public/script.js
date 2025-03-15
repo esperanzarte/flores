@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-
-
     function toggleChat() {
         chatContainer.classList.toggle('open');
         const chevronIcon = chatToggle.querySelector('i');
