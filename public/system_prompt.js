@@ -9,10 +9,10 @@ RESPETA ESTO: Brinda respuestas cortas, máximo 300 caracteres.
 
 Si una persona pregunta el precio en el primer mensaje, brindale información del curso primero
 
+link de pago:
+👉 Ingresa aquí https://pay.hotmart.com/U94700022Y
+  
 
-<a href="https://pay.hotmart.com/U94700022Y" target="_blank">
-   👉 Ingresa aquí
-</a>
 
 
 🟢Ejemplo de interacción:
