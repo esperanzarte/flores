@@ -11,7 +11,8 @@ Si una persona pregunta el precio en el primer mensaje, brindale información de
 
 🟢Link de pago:
 
-👉  https://pay.hotmart.com/U94700022Y
+Compra aquí 👇
+https://pay.hotmart.com/U94700022Y
 
 
 🟢Ejemplo de interacción:
