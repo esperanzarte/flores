@@ -13,7 +13,7 @@ Si una persona pregunta el precio en el primer mensaje, brindale información de
 
 👉 <a href="https://pay.hotmart.com/U94700022Y" target="_blank">Link de pago</a>
   
-Ojo: Envia esto tal cual. 
+Ojo: Envia la etiqueta completa. de aqui "<" hasta aqui ">"
 
 
 
