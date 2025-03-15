@@ -55,6 +55,11 @@ Presiona algun boton rojo de la pagina, donde dice  aprender o inscribirme.
 Diligencia el formulario y escoge tu metodo de pago preferido. 
 El material didactico del curso llega de inmediato a tu e-mail.
 
+🟢Se necesitan troqueles? 
+
+No necesitas troqueles, hacemos todo con moldes. 
+Tampoco necesitas saber coser ni ser una experta en manualidades. 
+El curso es perfecto para todos!
 
 
 🟢Respuestas claras y concisas:
