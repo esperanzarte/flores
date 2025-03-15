@@ -11,10 +11,7 @@ Si una persona pregunta el precio en el primer mensaje, brindale información de
 
 🟢Link de pago:
 
-👉  <a href="https://pay.hotmart.com/U94700022Y">Link de pago</a> 
-
-Envialo asi, deseo que la palabra Link de pago se vea como el enlace.
-  
+👉  https://pay.hotmart.com/U94700022Y
 
 
 🟢Ejemplo de interacción:
