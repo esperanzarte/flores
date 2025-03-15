@@ -15,9 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function formatResponse(response) {
-        let formattedText = response.replace(/([.!?])\s+/g, '$1\n\n');
-        formattedText = formattedText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
-        return formattedText;
+        return response.replace(/([.!?])\s+/g, '$1\n\n');
     }
 
     function toggleChat() {
@@ -41,10 +39,37 @@ document.addEventListener('DOMContentLoaded', function() {
         getBotResponse(message);
     });
 
-    function addMessage(text, sender) {
+    function addMessage(content, sender) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
-        messageElement.innerHTML = text;
+        
+        if (typeof content === 'string') {
+            if (sender === 'bot') {
+                messageElement.innerHTML = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+            } else {
+                messageElement.textContent = content;
+            }
+        } else if (typeof content === 'object') {
+            if (content.text) {
+                const textElement = document.createElement('p');
+                textElement.innerHTML = content.text;
+                messageElement.appendChild(textElement);
+            }
+            if (content.links && content.links.length > 0) {
+                const linksContainer = document.createElement('div');
+                linksContainer.classList.add('message-links');
+                content.links.forEach(link => {
+                    const linkElement = document.createElement('a');
+                    linkElement.href = link.url;
+                    linkElement.textContent = link.text;
+                    linkElement.target = "_blank";
+                    linkElement.classList.add('chat-link');
+                    linksContainer.appendChild(linkElement);
+                });
+                messageElement.appendChild(linksContainer);
+            }
+        }
+        
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -86,8 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const botReply = data.reply || "No entendí bien tu pregunta. ¿Puedes reformularla?";
             
             hideTypingIndicator();
-            const formattedReply = formatResponse(botReply);
-            addMessage(formattedReply, "bot");
+            addMessage(botReply, "bot");
         } catch (error) {
             console.error("Error al obtener respuesta:", error);
             hideTypingIndicator();
@@ -99,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chatContainer.classList.add('open');
     }, 9000);
 });
+
     // ========== SLIDER DE IMÁGENES ==========
     function initImageSlider() {
         const slider = document.querySelector('.hero-slider');
