@@ -8,35 +8,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatInput = document.getElementById('chatInput');
     const chatMessages = document.getElementById('chatMessages');
 
-    // Obtener o generar un userId único para el usuario
     let userId = localStorage.getItem("userId");
     if (!userId) {
         userId = `user_${Date.now()}`;
         localStorage.setItem("userId", userId);
     }
 
-    // Función para formatear la respuesta de GPT
-  function formatResponse(response) {
-    // Reemplaza cada punto, signo de exclamación o interrogación seguido de espacios
-    // por el mismo signo seguido de doble salto de línea.
-    return response.replace(/([.!?])\s+/g, '$1\n\n');
-}
+    function formatResponse(response) {
+        let formattedText = response.replace(/([.!?])\s+/g, '$1\n\n');
+        formattedText = formattedText.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+        return formattedText;
+    }
 
-    // Función para alternar el chat
     function toggleChat() {
         chatContainer.classList.toggle('open');
         const chevronIcon = chatToggle.querySelector('i');
         chevronIcon.style.transform = chatContainer.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
     }
     
-    // Agregar eventos de click y touch al encabezado del chat
     chatHeader.addEventListener('click', toggleChat);
     chatHeader.addEventListener('touchend', function(e) {
         e.preventDefault();
         toggleChat();
     });
 
-    // Manejo del formulario de chat
     chatForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const message = chatInput.value.trim();
@@ -46,16 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
         getBotResponse(message);
     });
 
-    // Función para agregar mensajes al chat
     function addMessage(text, sender) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
-        messageElement.textContent = text;
+        messageElement.innerHTML = text;
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // Mostrar indicador de "Escribiendo..."
     function showTypingIndicator() {
         let typingIndicator = document.querySelector('.typing-indicator');
         if (!typingIndicator) {
@@ -67,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Ocultar el indicador de "Escribiendo..."
     function hideTypingIndicator() {
         const typingIndicator = document.querySelector('.typing-indicator');
         if (typingIndicator) {
@@ -75,9 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Obtener respuesta del servidor (backend)
     async function getBotResponse(message) {
-        showTypingIndicator();  // Mostrar indicador de "Escribiendo..."
+        showTypingIndicator();
         
         try {
             const response = await fetch("https://flores-nlks.onrender.com/getBotResponse", {
@@ -86,29 +77,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    userId, // Enviar el ID único del usuario
-                    message // Enviar el último mensaje
+                    userId,
+                    message
                 })
             });
 
             const data = await response.json();
             const botReply = data.reply || "No entendí bien tu pregunta. ¿Puedes reformularla?";
             
-            hideTypingIndicator();  // Ocultar indicador de "Escribiendo..."
+            hideTypingIndicator();
             const formattedReply = formatResponse(botReply);
             addMessage(formattedReply, "bot");
         } catch (error) {
             console.error("Error al obtener respuesta:", error);
-            hideTypingIndicator();  // Ocultar indicador de "Escribiendo..."
+            hideTypingIndicator();
             addMessage("Hubo un problema al obtener la respuesta. Intenta de nuevo.", "bot");
         }
     }
 
-    // Abrir el chat automáticamente después de 3 segundos
     setTimeout(() => {
         chatContainer.classList.add('open');
     }, 9000);
-
+});
     // ========== SLIDER DE IMÁGENES ==========
     function initImageSlider() {
         const slider = document.querySelector('.hero-slider');
