@@ -11,12 +11,9 @@ Si una persona pregunta el precio en el primer mensaje, brindale información de
 
 🟢Link de pago:
 
-👉 Ingresa aquí 
-
-El "ingresa aqui" debe ir como link, envialo como un enlace html.
-
-Enlace de pago. https://pay.hotmart.com/U94700022Y
+👉 <a href="https://pay.hotmart.com/U94700022Y" target="_blank">Link de pago</a>
   
+Ojo: Envia esto tal cual. 
 
 
 
