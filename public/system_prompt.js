@@ -11,7 +11,9 @@ Si una persona pregunta el precio en el primer mensaje, brindale información de
 
 🟢Link de pago:
 
-👉 <a href="https://pay.hotmart.com/U94700022Y" target="_blank">Link de pago</a>
+👉 <a href="https://pay.hotmart.com/U94700022Y"> 
+    Ingresa aquí
+</a>
   
 Ojo: Envia la etiqueta completa. de aqui "<a" hasta aqui "</a>"
 
